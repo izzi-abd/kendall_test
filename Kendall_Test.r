@@ -4,7 +4,7 @@ y <- c(82,98,87,40,116,113,111,83,85,126,106,117)
 a <- c(42,46,39,37,65,88,86,56,62,92,54,81)
 z <- c(0,0,1,1,3,4,5,6,7,8,8,12)
 
-rank_kendall <- function(x,y,twoside = FALSE) {
+rank_kendall <- function(x,y,twoside = FALSE, onlytau= FALSE) {
   #Inisialisasi variabel :
   N <- length(x)
   S <- 0
@@ -60,8 +60,6 @@ rank_kendall <- function(x,y,twoside = FALSE) {
     Tau = S / (sqrt(0.5*N*(N-1))*sqrt(0.5*N*(N-1)))
   }
   
-  return(Tau)
-  
   #Menghitung Z :
   if(N>10) {
     Z = Tau / sqrt((2*(2*N+5))/(9*N*(N-1)))
@@ -70,28 +68,32 @@ rank_kendall <- function(x,y,twoside = FALSE) {
     } else {
       pval = 2*(pnorm(-abs(Z)))
     }
+    if(!onlytau) {
+      print(paste("T : ",Tau))
+      print(paste("Z : ",Z))
+      print(paste("pval : ",pval))
+    }
+  } else {
+    if(!onlytau) {
+    print(paste("τ : ",Tau))
+    print(paste("N : ",N))
+    print(paste("S : ",S))
+    }
   }
-  
-  print(paste('C : ',C,sep=""))
-  print(paste('D : ',D,sep=""))
-  print(paste('Ty : ',ty,sep=""))
-  print(paste('Tx : ',tx,sep=""))
-  print(paste('S : ',S,sep=""))
-  print(paste('Tau : ',Tau,sep=""))
-  print(paste('Z : ',Z,sep=""))
-  print(paste('pval : ',pval,sep=""))
-  
+    if(onlytau) {
+      return(Tau)
+    }
 }
 
 partial_kendall <- function(x,y,z) {
-  Tau_xy = rank_kendall(x,y)
-  Tau_xz = rank_kendall(x,z)
-  Tau_yz = rank_kendall(y,z)
+  Tau_xy = rank_kendall(x,y,onlytau = TRUE)
+  Tau_xz = rank_kendall(x,z,onlytau = TRUE)
+  Tau_yz = rank_kendall(y,z,onlytau = TRUE)
   Tau_xyz = (Tau_xy - (Tau_xz*Tau_yz))/(sqrt(1-(Tau_xz^2))*sqrt(1-(Tau_yz^2)))
-  print(paste('Result : ',Tau_xyz,sep=""))
-  print(paste('XY : ',Tau_xy,sep=""))
-  print(paste('Xz : ',Tau_xz,sep=""))
-  print(paste('YZ : ',Tau_yz,sep=""))
+  print(paste('τxy : ',Tau_xy))
+  print(paste('τxz : ',Tau_xz))
+  print(paste('τyz : ',Tau_yz))
+  print(paste('τxy.z : ',Tau_xyz))
 }
 
 #Fungsi untuk menghitung T(y / x / z) dengan parameter :
