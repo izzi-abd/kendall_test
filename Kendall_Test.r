@@ -53,10 +53,10 @@ rank_kendall <- function(x,y,twoside = FALSE, onlytau= FALSE) {
   ty = 0;
   
   #Menghitung Tx :
-  calcT(tx_array,rankX)
+  tx = calcT(tx_array,rankX)
   
   #Menghitung Ty :
-  calcT(ty_array,rankY)
+  ty = calcT(ty_array,rankY)
   
   #Menghitung Tau :
   if(tx==0 && ty==0) {
