@@ -1,13 +1,13 @@
 #Sample Data
-ex_1x <- c(4,6,3,5,1,2)
-ex_1y <- c(3,5,4,6,2,1)
-ex_2x <- c(1,2,3,4,5,6,7,8,9,10,11,12)
-ex_2y <- c(1,5,2,6,7,3,4,10,11,8,9,12)
+ex_1x <- c(42,46,39,37,65,88,86,56,62,92,54,81)
+ex_1y <- c(72,87,86,50,91,90,89,83,85,96,88,92)
+ex_2x <- c(4,6,3,5,1,2)
+ex_2y <- c(3,5,4,6,2,1)
 ex_3x <- c(69,72,64,60,84,90,89,77,78,95,75,86)
 ex_3y <- c(68,68,73,73,77,80,84,85,88,92,92,95)
-ex_4x <- c(16,17,18,19)
-ex_4y <- c(2,3,1,4)
-ex_4z <- c(1,3,2,4)
+ex_4z <- c(16,17,18,19)
+ex_4x <- c(2,3,1,4)
+ex_4y <- c(1,3,2,4)
 
 rank_kendall <- function(x,y,twoside = FALSE, onlytau= FALSE) {
   #Inisialisasi variabel :
@@ -80,14 +80,14 @@ rank_kendall <- function(x,y,twoside = FALSE, onlytau= FALSE) {
     }
   } else {
     if(!onlytau) {
-    print(paste("τ : ",Tau))
-    print(paste("N : ",N))
-    print(paste("S : ",S))
+      print(paste("τ : ",Tau))
+      print(paste("N : ",N))
+      print(paste("S : ",S))
     }
   }
-    if(onlytau) {
-      return(Tau)
-    }
+  if(onlytau) {
+    return(Tau)
+  }
 }
 
 partial_kendall <- function(x,y,z) {
@@ -102,8 +102,8 @@ partial_kendall <- function(x,y,z) {
 }
 
 #Fungsi untuk menghitung T(y / x / z) dengan parameter :
-  #rank_vector = vector ranking variabel X / Y / Z
-  #t_array = vector duplicate value dari rank_vector
+#rank_vector = vector ranking variabel X / Y / Z
+#t_array = vector duplicate value dari rank_vector
 calcT <- function(t_array, rank_vector) {
   result = 0
   if(length(t_array) != 0) {
@@ -122,6 +122,7 @@ getDuplicate <- function(rank_vector)  {
   return(rank_vector[duplicated(rank_vector)])
 }
 
-rank_kendall(x,y)
-partial_kendall(x,y,z)
-
+rank_kendall(ex_1x,ex_1y)
+rank_kendall(ex_2x,ex_2y)
+rank_kendall(ex_3x,ex_3y)
+partial_kendall(ex_4x,ex_4y,ex_4z)
