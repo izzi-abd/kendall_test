@@ -29,10 +29,10 @@ rank_kendall <- function(x,y,twoside = FALSE, onlytau= FALSE) {
   rankY <- matriksRankSorted[,2]
   
   #Looping untuk menghitung variabel S,C,D :
-  while(i<n) {
+  while(i<N) {
     Si <- 0
     j <- i+1
-    while(j<n+1) {
+    while(j<N+1) {
       if(matriksRankSorted[i,2] < matriksRankSorted[j,2]) {
         Si = Si+1
         C = C+1
